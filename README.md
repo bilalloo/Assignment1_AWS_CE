@@ -17,19 +17,19 @@ The system architecture is explicitly designed to be secure, scalable, and fault
 * **Application Load Balancer URL:** `UniEvent-ALB-1619398761.eu-north-1.elb.amazonaws.com`
 
 ## Architecture & Service Justification
-[cite_start]This project utilizes a complete AWS-based architecture leveraging IAM, VPC, EC2, S3, and Elastic Load Balancing[cite: 15].
+This project utilizes a complete AWS-based architecture leveraging IAM, VPC, EC2, S3, and Elastic Load Balancing[cite: 15].
 
 * **Virtual Private Cloud (VPC):** A custom VPC was deployed across two Availability Zones (AZs) to provide network isolation and foundational high availability.
-* [cite_start]**Elastic Compute Cloud (EC2):** The web application runs on multiple EC2 instances located strictly inside private subnets[cite: 18]. This enhances security by preventing direct internet access to the servers. [cite_start]Distributing these instances across two AZs ensures the system must continue operating even if one EC2 instance fails[cite: 23].
+* **Elastic Compute Cloud (EC2):** The web application runs on multiple EC2 instances located strictly inside private subnets[cite: 18]. This enhances security by preventing direct internet access to the servers. [cite_start]Distributing these instances across two AZs ensures the system must continue operating even if one EC2 instance fails[cite: 23].
 * **Elastic Load Balancing (ELB):** An internet-facing Application Load Balancer sits in the public subnets, securely receiving student traffic and distributing it across the healthy EC2 instances in the private subnets.
-* [cite_start]**Simple Storage Service (S3):** Event posters or related images must be stored securely in S3[cite: 21]. A dedicated, private S3 bucket is used to persist these media files securely.
+* **Simple Storage Service (S3):** Event posters or related images must be stored securely in S3[cite: 21]. A dedicated, private S3 bucket is used to persist these media files securely.
 * **Identity and Access Management (IAM):** To maintain cloud security best practices, an IAM Role with least-privilege permissions is attached directly to the EC2 instances. This allows the servers to securely upload fetched images to S3 without utilizing hardcoded AWS credentials.
 
 ## Open API Evaluation & Integration
-[cite_start]To fulfill the requirement of fetching external data, the **Ticketmaster Discovery API** was selected[cite: 9, 12].
+To fulfill the requirement of fetching external data, the **Ticketmaster Discovery API** was selected[cite: 9, 12].
 
-* [cite_start]**Evaluation:** The Ticketmaster API is a highly reliable, legitimate open events API that provides structured JSON data[cite: 12]. [cite_start]It comprehensively fulfills the data requirements by providing the event title, date, venue, description, and optionally event images[cite: 14].
-* [cite_start]**Integration Strategy:** The application periodically fetches event data from the selected Open API[cite: 19]. [cite_start]The JSON payload is processed, text data is displayed to the users as "University Events," and the associated event images are extracted and downloaded directly into the secure S3 bucket[cite: 21, 22].
+* **Evaluation:** The Ticketmaster API is a highly reliable, legitimate open events API that provides structured JSON data[cite: 12]. [cite_start]It comprehensively fulfills the data requirements by providing the event title, date, venue, description, and optionally event images[cite: 14].
+* **Integration Strategy:** The application periodically fetches event data from the selected Open API[cite: 19]. [cite_start]The JSON payload is processed, text data is displayed to the users as "University Events," and the associated event images are extracted and downloaded directly into the secure S3 bucket[cite: 21, 22].
 
 ## Step-by-Step Deployment Guide
 1. **Networking:** Created a VPC with 2 public subnets (for the ALB/NAT) and 2 private subnets (for the EC2 instances).
