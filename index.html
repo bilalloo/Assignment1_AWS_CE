@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UniEvent Platform</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .event-card { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        img { border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Official University Events</h1>
+    <p>Welcome to UniEvent! Browse our upcoming activities below.</p>
+    
+    <div>
+        {% for event in events %}
+        <div class="event-card">
+            <h2>{{ event.title }}</h2>
+            <p><strong>Date:</strong> {{ event.date }}</p>
+            <img src="{{ event.image }}" alt="Event Poster" width="300">
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
