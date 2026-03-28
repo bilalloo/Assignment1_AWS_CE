@@ -1,5 +1,5 @@
 # UniEvent Cloud Architecture
-CE308 Cloud Computing Assignment 1
+CE308 Cloud Computing 
 
 Deployment of a Scalable University Event Management System on AWS.
 
